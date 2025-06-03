@@ -1,7 +1,5 @@
-// src/components/Login.tsx
-import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import login from "../context/AuthContext";
 
 type LoginFormInputs = {
   email: string;
@@ -14,58 +12,58 @@ const Login: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<LoginFormInputs>();
-  const [err, setErr] = useState("");
 
   const onSubmit = async (data: LoginFormInputs) => {
     console.log("Form Data:", data);
 
-    try {
-      const { email, password, role } = data;
-      const res = await login(email, password, role);
-      console.log(res);
-    } catch (error) {
-      setErr(error.message);
-    }
+    reset();
   };
 
   return (
-    <>
-      <h1 className="text-center pt-6 text-4xl uppercase">Login</h1>
+    <main className="w-screen">
+      <h2 className="text-center pt-8 text-6xl font-medium">
+        Log<span className="text-[#fa5252]">In</span>
+      </h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        style={{ maxWidth: "300px", margin: "auto" }}
-        className="py-5"
+        // style={{ maxWidth: "300px", margin: "auto" }}
+        className="py-5 w-screen px-7 sm:px-0 sm:max-w-2/3 mx-auto"
       >
         <div className="py-4 flex flex-col items-center">
-          <label className="block text-2xl py-2">Email:</label>
+          <label className="block text-xl py-1 self-start">Email:</label>
           <input
             type="email"
             {...register("email", { required: "Email is required" })}
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className={`w-full p-2 border border-gray-300 rounded-md ${
+              errors.email ? "border-red-500" : ""
+            }`}
           />
           {errors.email && (
-            <p style={{ color: "red" }}>{errors.email.message}</p>
+            <span style={{ color: "red" }}>{errors.email.message}</span>
           )}
         </div>
 
         <div className="py-4 flex flex-col items-center">
-          <label className="block text-2xl py-2">Password:</label>
+          <label className="block text-xl py-1 self-start">Password:</label>
           <input
             type="password"
             {...register("password", {
               required: "Password is required",
               minLength: { value: 6, message: "Min length is 6" },
             })}
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className={`w-full p-2 border border-gray-300 rounded-md ${
+              errors.password ? "border-red-500" : ""
+            }`}
           />
           {errors.password && (
-            <p style={{ color: "red" }}>{errors.password.message}</p>
+            <span style={{ color: "red" }}>{errors.password.message}</span>
           )}
         </div>
 
         <div className="py-4 flex flex-col items-center">
-          <label className="block text-2xl py-2">Role:</label>
+          <label className="block text-xl py-1 self-start">Role:</label>
           <select
             {...register("role", { required: "Role is required" })}
             className="w-full p-2 border border-gray-300 rounded-md"
@@ -80,13 +78,21 @@ const Login: React.FC = () => {
         <div className="py-3">
           <button
             type="submit"
-            className="w-full bg-red-900 text-white py-2 rounded-2xl cursor-pointer hover:bg-amber-50 hover:text-red-950 transition-all duration-200"
+            className="w-full bg-[#fa5252] text-white py-2 rounded-2xl cursor-pointer hover:bg-[#f03e3e] transition-all duration-200"
           >
             Login
           </button>
         </div>
+        <div className="w-full">
+          <Link
+            to={"/register"}
+            className="hover:border-b-2 border-black w-fit mx-auto block pt-3 pb-0"
+          >
+            New Here, Sign Up
+          </Link>
+        </div>
       </form>
-    </>
+    </main>
   );
 };
 

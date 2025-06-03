@@ -8,7 +8,7 @@ const app = express();
 const cors = require("cors");
 
 const corsOptions = {
-  origin: [process.env.FRONTEND_LOCAL_URL],
+  origin: [`${process.env.FRONTEND_LOCAL_URL}`],
   credentials: true,
   openSuccessStatus: 200,
 };

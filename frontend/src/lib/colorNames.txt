@@ -1,0 +1,4 @@
+// Used Color codes for app theme,
+-> #fa5252
+-> #c92a2a
+-> #e03131
