@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+const API_URL = import.meta.env.VITE_API_URL_PROD;
 
 type LoginFormInputs = {
   email: string;
@@ -17,6 +19,36 @@ const Login: React.FC = () => {
 
   const onSubmit = async (data: LoginFormInputs) => {
     console.log("Form Data:", data);
+
+    try {
+      const response = await fetch(`${API_URL}/api/user/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const loginData = await response.json();
+
+      if (loginData.success === true) {
+        toast.success("Login successful!");
+      }
+
+      console.log(loginData);
+
+      localStorage.setItem("resourcely_token", loginData?.jwtToken);
+      // localStorage.setItem("resourcely_role", loginData?.role);
+
+      // setTimeout(() => {
+      //   window.location.href = "/";
+      // }, 1000);
+    } catch (error) {
+      console.log(error);
+      if (error) {
+        toast.error("Login failed!");
+      }
+    }
 
     reset();
   };

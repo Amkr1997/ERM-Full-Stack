@@ -2,6 +2,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 const API_URL = import.meta.env.VITE_API_URL_PROD;
 
 type RegisterFormInputs = {
@@ -31,9 +32,16 @@ const Login: React.FC = () => {
         body: JSON.stringify(data),
       });
 
-      console.log(response);
+      const signUpData = await response.json();
+
+      if (signUpData.success === true) {
+        toast.success("Registration successful!");
+      }
     } catch (error) {
       console.log(error);
+      if (error) {
+        toast.error("Registration failed!");
+      }
     }
 
     reset();
