@@ -3,6 +3,11 @@ const Schema = mongoose.Schema;
 
 const AssignmentSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
+
     enigneerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "CrmUser",

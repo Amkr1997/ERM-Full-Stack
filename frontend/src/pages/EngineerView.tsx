@@ -11,12 +11,12 @@ const EngineerView = () => {
     (async () => {
       try {
         const engineersData = await fetch(
-          `${API_URL}/get/all/assignments/${userId}`
+          `${API_URL}/api/assignment/get/all/assignments/${userId}`
         );
 
         const res = await engineersData.json();
 
-        console.log(res.data);
+        console.log(res?.allAssignments);
       } catch (error) {
         console.log(error);
       }
