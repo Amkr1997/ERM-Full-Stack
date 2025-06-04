@@ -49,6 +49,10 @@ const login = async (req, res) => {
       res.status(404).json({ error: "User not found" });
     }
 
+    if (user.role !== role) {
+      return res.status(401).json({ error: "Role not correct" });
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {

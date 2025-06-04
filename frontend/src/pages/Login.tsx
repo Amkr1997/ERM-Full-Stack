@@ -37,20 +37,7 @@ const Login: React.FC = () => {
         toast.success("Login successful!");
       }
 
-      console.log(loginData);
-
-      // localStorage.setItem("resourcely_token", loginData?.jwtToken);
-      // localStorage.setItem("resourcely_role", loginData?.role);
-
       setAuth(loginData?.role); // setting role in store
-
-      setTimeout(() => {
-        if (loginData?.role === "manager") {
-          window.location.href = "/manager/view";
-        } else {
-          window.location.href = "/engineer/view";
-        }
-      }, 1000);
     } catch (error) {
       console.log(error);
       if (error) {
@@ -109,8 +96,8 @@ const Login: React.FC = () => {
             className="w-full p-2 border border-gray-300 rounded-md"
           >
             <option value="">Select role</option>
-            <option value="Manager">Manager</option>
-            <option value="Engineer">Engineer</option>
+            <option value="manager">Manager</option>
+            <option value="engineer">Engineer</option>
           </select>
           {errors.role && <p style={{ color: "red" }}>{errors.role.message}</p>}
         </div>
