@@ -15,7 +15,6 @@ const EngineerView = () => {
         );
 
         const res = await engineersData.json();
-
         console.log(res?.allAssignments);
       } catch (error) {
         console.log(error);
