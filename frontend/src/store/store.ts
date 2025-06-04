@@ -4,7 +4,8 @@ import { persist } from "zustand/middleware";
 type AuthState = {
   isAuthenticated: boolean;
   userRole: string;
-  setAuth: (role: string) => void;
+  userId: string;
+  setAuth: (args: { role: string; id: string }) => void;
   logout: () => void;
 };
 
@@ -13,7 +14,9 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       isAuthenticated: false,
       userRole: "",
-      setAuth: (role: string) => set({ isAuthenticated: true, userRole: role }),
+      userId: "",
+      setAuth: ({ role, id }: { role: string; id: string }) =>
+        set({ isAuthenticated: true, userRole: role, userId: id }),
       logout: () => set({ isAuthenticated: false, userRole: "" }),
     }),
     { name: "auth-storage" }

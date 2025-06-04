@@ -8,6 +8,7 @@ type LoginFormInputs = {
   email: string;
   password: string;
   role: string;
+  userId: string;
 };
 
 const Login: React.FC = () => {
@@ -37,7 +38,7 @@ const Login: React.FC = () => {
         toast.success("Login successful!");
       }
 
-      setAuth(loginData?.role); // setting role in store
+      setAuth({ role: loginData?.role, id: loginData?.userId }); // setting role in store
     } catch (error) {
       console.log(error);
       if (error) {

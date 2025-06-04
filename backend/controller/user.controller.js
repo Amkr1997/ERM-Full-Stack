@@ -67,9 +67,12 @@ const login = async (req, res) => {
       }
     );
 
-    res
-      .status(200)
-      .json({ message: "Login successful", jwtToken, role: user.role });
+    res.status(200).json({
+      message: "Login successful",
+      jwtToken,
+      role: user.role,
+      userId: user._id,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

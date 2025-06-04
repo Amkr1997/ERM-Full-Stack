@@ -3,10 +3,10 @@ const User = require("../models/user.model");
 const ProjectUser = require("../models/project.model");
 
 const getAllAssignments = async (req, res) => {
-  const engineerId = req.params.enigneerId;
+  const enigneerId = req.params.enigneerId;
 
   try {
-    const allAssignments = await Assignment.find({ engineerId }).populate({
+    const allAssignments = await Assignment.find({ enigneerId }).populate({
       path: "enigneerId",
     });
 
