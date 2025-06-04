@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { useAuthStore } from "@/store/store";
 const API_URL = import.meta.env.VITE_API_URL_PROD;
 
 type LoginFormInputs = {
@@ -16,6 +17,7 @@ const Login: React.FC = () => {
     formState: { errors },
     reset,
   } = useForm<LoginFormInputs>();
+  const { setAuth } = useAuthStore((state) => state);
 
   const onSubmit = async (data: LoginFormInputs) => {
     console.log("Form Data:", data);
@@ -37,12 +39,18 @@ const Login: React.FC = () => {
 
       console.log(loginData);
 
-      localStorage.setItem("resourcely_token", loginData?.jwtToken);
+      // localStorage.setItem("resourcely_token", loginData?.jwtToken);
       // localStorage.setItem("resourcely_role", loginData?.role);
 
-      // setTimeout(() => {
-      //   window.location.href = "/";
-      // }, 1000);
+      setAuth(loginData?.role); // setting role in store
+
+      setTimeout(() => {
+        if (loginData?.role === "manager") {
+          window.location.href = "/manager/view";
+        } else {
+          window.location.href = "/engineer/view";
+        }
+      }, 1000);
     } catch (error) {
       console.log(error);
       if (error) {
@@ -83,7 +91,7 @@ const Login: React.FC = () => {
             type="password"
             {...register("password", {
               required: "Password is required",
-              minLength: { value: 6, message: "Min length is 6" },
+              minLength: { value: 3, message: "Min length is 3" },
             })}
             className={`w-full p-2 border border-gray-300 rounded-md ${
               errors.password ? "border-red-500" : ""
