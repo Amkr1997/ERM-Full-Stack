@@ -1,11 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useAuthStore } from "../../store/store";
 import { useLocation } from "react-router-dom";
 import { CircleUserRound } from "lucide-react";
 
 const Navbar = () => {
-  const { logout } = useAuthStore((state) => state);
   const [showNav, setShowNav] = useState(false);
   const location = useLocation();
 
