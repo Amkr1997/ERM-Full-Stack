@@ -20,6 +20,12 @@ const AssignmentSchema = new Schema(
       required: true,
     },
 
+    managerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "CrmUser",
+      required: true,
+    },
+
     allocationPercentage: {
       type: Number,
       required: true,

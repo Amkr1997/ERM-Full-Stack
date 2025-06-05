@@ -1,10 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { useAuthStore } from "@/store/store";
+import AssignmentCard from "@/components/others/AssignmentCard";
+import { useAuthStore, useEngineerStore } from "@/store/store";
 import { useEffect } from "react";
-const API_URL = import.meta.env.VITE_API_URL_PROD;
+const API_URL = import.meta.env.VITE_API_URL_LOCAL;
 
 const EngineerView = () => {
-  const { logout, userId } = useAuthStore((state) => state);
+  const { userId } = useAuthStore((state) => state);
+  const { allEngineers, setEngineers } = useEngineerStore((state) => state);
 
   useEffect(() => {
     // fetching all assignments.
@@ -16,6 +17,7 @@ const EngineerView = () => {
 
         const res = await engineersData.json();
         console.log(res?.allAssignments);
+        setEngineers(res?.allAssignments);
       } catch (error) {
         console.log(error);
       }
@@ -23,10 +25,14 @@ const EngineerView = () => {
   }, []);
 
   return (
-    <section className="w-screen">
-      <Button className="w-fit mx-auto" onClick={logout}>
-        Logout
-      </Button>
+    <section className="w-full px-6">
+      <h1 className="text-3xl font-bold text-center py-6">
+        All Your Assignments
+      </h1>
+      <AssignmentCard />
+      {allEngineers?.map((engineer) => (
+        <AssignmentCard key={engineer._id} />
+      ))}
     </section>
   );
 };

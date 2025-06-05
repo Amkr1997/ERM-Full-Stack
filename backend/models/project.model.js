@@ -23,10 +23,12 @@ const ProjectSchema = Schema(
       default: Date.now,
     },
 
-    requiredSkills: {
-      type: String,
-      required: true,
-    },
+    requiredSkills: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
 
     teamSize: {
       type: Number,

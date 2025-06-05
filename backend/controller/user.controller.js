@@ -2,11 +2,14 @@ const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config({ path: "./.env" });
+const connectDB = require("../db/db.connect");
 
 const register = async (req, res) => {
   const { name, email, password, role } = req.body;
 
   try {
+    await connectDB();
+
     if (name === "" || email === "" || password === "" || role === "") {
       res.status(400).json({ error: "All fields are required" });
     }
@@ -39,6 +42,8 @@ const login = async (req, res) => {
   const { email, password, role } = req.body;
 
   try {
+    await connectDB();
+
     if (email === "" || password === "" || role === "") {
       res.status(400).json({ error: "All fields are required" });
     }
@@ -82,6 +87,8 @@ const verifyAuth = async (req, res, next) => {
   console.log(req.headers["authorization"]);
 
   try {
+    await connectDB();
+
     const token = req.headers["authorization"].split(" ")[1];
 
     if (!token) return res.status(401).json({ error: "Unauthorized" });
@@ -107,6 +114,8 @@ const privateRoute = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
+    await connectDB();
+
     const users = await User.find().select("-password");
 
     if (!users) {
@@ -121,12 +130,50 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const getSingleUser = async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    await connectDB();
+
+    const user = await User.findById(userId).select("-password").populate();
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    return res.status(200).json({ message: "User fetched successfully", user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getAllEngineers = async (req, res) => {
+  try {
+    await connectDB();
+
+    const engineers = await User.find({ role: "engineer" }).select("-password");
+
+    if (!engineers) {
+      return res.status(404).json({ error: "Engineers not found" });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Engineers fetched successfully", engineers });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // For updating profile
 const updateUser = async (req, res) => {
   const userId = req.params.id;
   const dataToUpdate = req.body;
 
   try {
+    await connectDB();
+
     const existingUser = await User.findById(userId);
 
     if (!existingUser) {
@@ -157,6 +204,8 @@ const deleteUser = async (req, res) => {
   const userId = req.params.id;
 
   try {
+    await connectDB();
+
     const deletedUser = await User.findByIdAndDelete(userId);
 
     if (!deletedUser) {
@@ -177,6 +226,8 @@ module.exports = {
   verifyAuth,
   privateRoute,
   getAllUsers,
+  getSingleUser,
+  getAllEngineers,
   updateUser,
   deleteUser,
 };

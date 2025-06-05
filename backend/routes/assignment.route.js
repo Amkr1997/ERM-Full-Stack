@@ -8,7 +8,7 @@ const {
   deleteAssignment,
 } = require("../controller/assignment.controller");
 
-router.get("/get/all/assignments/:enigneerId", getAllAssignments);
+router.get("/get/all/assignments/:userId", getAllAssignments);
 router.post("/add/new/:engineerId/assignment/:projectId", addNewAssignement);
 router.post("/update/assignment/:id", updateAssignment);
 router.delete("/delete/assignment/:id", deleteAssignment);

@@ -1,9 +1,10 @@
 // src/components/Login.tsx
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-const API_URL = import.meta.env.VITE_API_URL_PROD;
+// const API_URL = import.meta.env.VITE_API_URL_PROD;
+const API_URL = import.meta.env.VITE_API_URL_LOCAL;
 
 type RegisterFormInputs = {
   name: string;
@@ -19,9 +20,10 @@ const Login: React.FC = () => {
     formState: { errors },
     reset,
   } = useForm<RegisterFormInputs>();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: RegisterFormInputs) => {
-    console.log("Form Data:", data);
+    // console.log("Form Data:", data);
 
     try {
       const response = await fetch(`${API_URL}/api/user/register`, {
@@ -32,11 +34,12 @@ const Login: React.FC = () => {
         body: JSON.stringify(data),
       });
 
-      const signUpData = await response.json();
+      await response.json();
+      toast.success("Registration successful!");
 
-      if (signUpData.success === true) {
-        toast.success("Registration successful!");
-      }
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
     } catch (error) {
       console.log(error);
       if (error) {

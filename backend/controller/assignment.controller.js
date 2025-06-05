@@ -1,22 +1,49 @@
 const Assignment = require("../models/assignment.model");
 const User = require("../models/user.model");
 const ProjectUser = require("../models/project.model");
+const connectDB = require("../db/db.connect");
 
 const getAllAssignments = async (req, res) => {
-  const enigneerId = req.params.enigneerId;
+  const userId = req.params.userId;
 
   try {
-    const allAssignments = await Assignment.find({ enigneerId }).populate({
-      path: "enigneerId",
-    });
+    await connectDB();
 
-    if (!allAssignments) {
-      return res.status(404).json({ error: "Assignments not found" });
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
 
-    return res
-      .status(200)
-      .json({ message: "Assignments fetched successfully", allAssignments });
+    if (userId === user.enigneerId) {
+      const allAssignments = await Assignment.find({
+        enigneerId: userId,
+      }).populate({
+        path: "enigneerId",
+      });
+
+      if (!allAssignments) {
+        return res.status(404).json({ error: "Assignments not found" });
+      }
+
+      return res
+        .status(200)
+        .json({ message: "Assignments fetched successfully", allAssignments });
+    } else {
+      const allAssignments = await Assignment.find({
+        managerId: userId,
+      }).populate({
+        path: "managerId",
+      });
+
+      if (!allAssignments) {
+        return res.status(404).json({ error: "Assignments not found" });
+      }
+
+      return res
+        .status(200)
+        .json({ message: "Assignments fetched successfully", allAssignments });
+    }
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -28,6 +55,8 @@ const addNewAssignement = async (req, res) => {
   const projectId = req.params.projectId;
 
   try {
+    await connectDB();
+
     const existingUser = await User.findById(engineerId);
 
     if (!existingUser) {
@@ -36,25 +65,18 @@ const addNewAssignement = async (req, res) => {
 
     const existingProject = await ProjectUser.findById(projectId);
 
-    // console.log("existingProject", existingProject);
-
     if (
-      existingProject.startDate > assignmentData.startDate ||
-      existingProject.endDate < assignmentData.endDate
+      new Date(assignmentData.startDate) > new Date(assignmentData.startDate) ||
+      new Date(assignmentData.startDate) < new Date(assignmentData.startDate)
     ) {
       return res
-        .status(404)
+        .status(400)
         .json({ error: "Assignment timeline should align with project" });
     }
 
     const existingAssignments = await Assignment.find({
-      engineerId,
+      enigneerId: engineerId,
     });
-
-    // console.log("existingAssignments", existingAssignments);
-
-    if (!existingAssignments)
-      return res.status(404).json({ error: "Assignments not found" });
 
     const totalCapacityAllocated = existingAssignments.reduce(
       (acc, curr) => acc + curr.allocationPercentage,
@@ -63,14 +85,20 @@ const addNewAssignement = async (req, res) => {
 
     const remainingCapacity = existingUser.maxCapacity - totalCapacityAllocated;
 
+    console.log(
+      "assignmentData.allocationPercentage",
+      assignmentData.allocationPercentage
+    );
+
     if (
       assignmentData.allocationPercentage <= remainingCapacity &&
       assignmentData.allocationPercentage > 0
     ) {
       const newAssignment = await Assignment.create({
         ...assignmentData,
-        engineerId,
+        enigneerId: engineerId,
         projectId,
+        managerId: existingProject.managerId,
       });
 
       return res
@@ -89,6 +117,8 @@ const updateAssignment = async (req, res) => {
   const assignmentToUpdate = req.body;
 
   try {
+    await connectDB();
+
     const updatedAssignment = await Assignment.findByIdAndUpdate(
       assignmentId,
       assignmentToUpdate,
@@ -111,6 +141,8 @@ const deleteAssignment = async (req, res) => {
   const assignmentId = req.params.id;
 
   try {
+    await connectDB();
+
     const deletedAssignment = await Assignment.findByIdAndDelete(assignmentId);
 
     if (!deletedAssignment) {

@@ -1,11 +1,12 @@
 const ProjectUser = require("../models/project.model");
+const connectDB = require("../db/db.connect");
 
 const addNewProject = async (req, res) => {
   const projectData = req.body;
 
-  console.log(req.body);
-
   try {
+    await connectDB();
+
     const newProject = await ProjectUser.create(projectData);
 
     if (!newProject) {
@@ -24,6 +25,8 @@ const getAllProjects = async (req, res) => {
   const managerId = req.params.managerId;
 
   try {
+    await connectDB();
+
     const allProjects = await ProjectUser.find({ managerId });
 
     if (!allProjects) {
@@ -43,6 +46,8 @@ const getSingleProject = async (req, res) => {
   const managerId = req.params.managerId;
 
   try {
+    await connectDB();
+
     const singleProject = await ProjectUser.findById(projectId);
 
     if (!singleProject) {
@@ -66,6 +71,8 @@ const updateProject = async (req, res) => {
   const projectToUpdate = req.body;
 
   try {
+    await connectDB();
+
     const updatedProject = await ProjectUser.findByIdAndUpdate(
       projectId,
       projectToUpdate,
@@ -88,6 +95,8 @@ const deleteProject = async (req, res) => {
   const projectId = req.params.id;
 
   try {
+    await connectDB();
+
     const deletedProject = await ProjectUser.findByIdAndDelete(projectId);
 
     if (!deletedProject) {
