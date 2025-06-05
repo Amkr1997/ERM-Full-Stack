@@ -8,7 +8,7 @@ const app = express();
 const cors = require("cors");
 
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: ["http://localhost:5173", "https://erm-full-stack-sd4q.vercel.app"],
   credentials: true,
   openSuccessStatus: 200,
 };
