@@ -8,8 +8,8 @@ import {
 } from "@/store/store";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-// const API_URL = import.meta.env.VITE_API_URL_PROD;
-const API_URL = import.meta.env.VITE_API_URL_LOCAL;
+const API_URL = import.meta.env.VITE_API_URL_PROD;
+// const API_URL = import.meta.env.VITE_API_URL_LOCAL;
 
 const ManagerView = () => {
   const { userId } = useAuthStore((state) => state);
@@ -80,23 +80,6 @@ const ManagerView = () => {
     })();
   }, [userId]);
 
-  // finding average utilization.
-  useEffect(() => {
-    const averageUtilization = () => {
-      console.log(allEngineers);
-
-      // let totalCapacity = allAssignments?.reduce(
-      //   (acc,curr) => acc + curr.,
-      // );
-    };
-
-    averageUtilization();
-  }, [allEngineers]);
-
-  // console.log(allEngineers);
-
-  console.log(allAssignments);
-
   return (
     <section className="w-screen">
       <div className="w-full pt-5 pb-3 flex items-center justify-center flex-wrap gap-4">
@@ -123,10 +106,12 @@ const ManagerView = () => {
           </h1>
 
           <section className="pt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <InfoCards title="engineers" value={allEngineers?.length} />
-            <InfoCards title="projects" value={allProjects?.length} />
-            <InfoCards title="assignments" value={allAssignments?.length} />
-            <InfoCards title="avg utilization" value={allAssignments?.length} />
+            <InfoCards title="All engineers" value={allEngineers?.length} />
+            <InfoCards title="Total projects" value={allProjects?.length} />
+            <InfoCards
+              title="Total assignments"
+              value={allAssignments?.length}
+            />
           </section>
         </main>
       )}

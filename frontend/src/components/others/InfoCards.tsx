@@ -1,6 +1,5 @@
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -14,23 +13,21 @@ type InfoCardProps = {
 };
 
 const InfoCards = ({ title, value }: InfoCardProps) => {
-  console.log(title);
-  console.log(value);
-
   return (
     <>
       <Card className="w-full">
         <CardHeader>
-          <CardTitle>Total Projects: </CardTitle>
-          <CardDescription></CardDescription>
-          <CardAction>Card Action</CardAction>
+          <CardTitle>
+            <h2 className="text-2xl capitalize">{title}</h2>
+          </CardTitle>
+          <CardDescription>
+            <span>{title} basic details given</span>
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <p>Card Content</p>
+          <h1 className="text-3xl font-bold text-center">{value}</h1>
         </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
+        <CardFooter></CardFooter>
       </Card>
     </>
   );

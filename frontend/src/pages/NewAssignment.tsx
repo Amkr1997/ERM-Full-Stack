@@ -29,11 +29,9 @@ const NewAssignment: React.FC = () => {
   const onSubmit = async (data: NewAssignmentFormInputs) => {
     console.log("Form Data:", data);
 
-    console.log(data);
-
     try {
       const response = await fetch(
-        `${API_URL}/add/new/${data?.engineerId}/assignment/${data?.projectId}`,
+        `${API_URL}/api/assignment/add/new/${data?.engineerId}/assignment/${data?.projectId}`,
         {
           method: "POST",
           headers: {

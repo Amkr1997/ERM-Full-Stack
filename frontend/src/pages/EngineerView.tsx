@@ -1,7 +1,7 @@
 import AssignmentCard from "@/components/others/AssignmentCard";
 import { useAuthStore, useEngineerStore } from "@/store/store";
 import { useEffect } from "react";
-const API_URL = import.meta.env.VITE_API_URL_LOCAL;
+const API_URL = import.meta.env.VITE_API_URL_PROD;
 
 const EngineerView = () => {
   const { userId } = useAuthStore((state) => state);

@@ -6,8 +6,6 @@ const Profile = () => {
   const { profile } = useUserProfileStore((state) => state);
   const { logout } = useAuthStore((state) => state);
 
-  console.log(profile);
-
   return (
     <section className="w-screen">
       {profile?.name && (
@@ -31,13 +29,13 @@ const Profile = () => {
           </button>
         </Link>
 
-        {/* {profile?.role === "engineer" && (
+        {profile?.role === "engineer" && (
           <Link to={"/update/profile"}>
             <button className="bg-[#fa5252] hover:bg-[#c92a2a] text-white font-bold py-1 w-full px-4 rounded-2xl cursor-pointer">
               Update Profile
             </button>
           </Link>
-        )} */}
+        )}
       </div>
     </section>
   );

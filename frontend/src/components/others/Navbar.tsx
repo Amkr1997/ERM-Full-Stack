@@ -40,12 +40,24 @@ const Navbar = () => {
             </div>
           </NavLink>
 
-          <div className="flex items-center">
-            {/* <div className="" onClick={logout}>
-              <button className="text-lg font-bold bg-[#fa5252] rounded-2xl text-white px-3 py-1 hover:bg-[#c92a2a] transition-all duration-200 cursor-pointer">
-                Log-Out
+          <div className="flex items-center gap-2">
+            <NavLink to={"/engineers/page"}>
+              <button className="cursor-pointer w-fit px-2 text-white bg-red-400 rounded-2xl">
+                Engineers
               </button>
-            </div> */}
+            </NavLink>
+
+            <NavLink to={"/assignments/page"}>
+              <button className="cursor-pointer w-fit px-2 text-white bg-red-400 rounded-2xl">
+                Assignments
+              </button>
+            </NavLink>
+
+            <NavLink to={"/projects/page"}>
+              <button className="cursor-pointer w-fit px-2 text-white bg-red-400 rounded-2xl">
+                Projects
+              </button>
+            </NavLink>
 
             <NavLink to={"/profile"}>
               <CircleUserRound className="w-8 h-8 cursor-pointer bg-black text-white rounded-full" />
