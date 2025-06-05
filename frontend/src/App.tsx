@@ -11,9 +11,6 @@ import NewProject from "./pages/NewProject";
 import NewAssignment from "./pages/NewAssignment";
 import Profile from "./pages/Profile";
 import UpdateProfile from "./pages/Updateprofile";
-import EngineersPage from "./pages/EngineersPage";
-import DisplayProjects from "./pages/DisplayProjects";
-import DisplayAssignments from "./pages/DisplayAssignments";
 
 const App = () => {
   return (
@@ -48,18 +45,7 @@ const App = () => {
               path="/update/profile"
               element={<PrivateElement element={<UpdateProfile />} />}
             />
-            <Route
-              path="/engineers/page"
-              element={<PrivateElement element={<EngineersPage />} />}
-            />
-            <Route
-              path="/projects/page"
-              element={<PrivateElement element={<DisplayProjects />} />}
-            />
-            <Route
-              path="/assignments/page"
-              element={<PrivateElement element={<DisplayAssignments />} />}
-            />
+
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
           </Routes>

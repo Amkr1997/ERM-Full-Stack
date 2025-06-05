@@ -1,3 +1,5 @@
+import DisplayProjects from "@/components/others/DisplayProjects";
+import EngineersPage from "@/components/others/EngineersPage";
 import InfoCards from "@/components/others/InfoCards";
 import {
   useAssignmentStore,
@@ -112,6 +114,11 @@ const ManagerView = () => {
               title="Total assignments"
               value={allAssignments?.length}
             />
+          </section>
+
+          <section className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <EngineersPage />
+            <DisplayProjects />
           </section>
         </main>
       )}

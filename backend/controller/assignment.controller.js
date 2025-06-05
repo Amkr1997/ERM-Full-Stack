@@ -18,8 +18,6 @@ const getAllAssignments = async (req, res) => {
     if (userId === user.enigneerId) {
       const allAssignments = await Assignment.find({
         enigneerId: userId,
-      }).populate({
-        path: "enigneerId",
       });
 
       if (!allAssignments) {

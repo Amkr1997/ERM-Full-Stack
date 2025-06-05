@@ -41,24 +41,6 @@ const Navbar = () => {
           </NavLink>
 
           <div className="flex items-center gap-2">
-            <NavLink to={"/engineers/page"}>
-              <button className="cursor-pointer w-fit px-2 text-white bg-red-400 rounded-2xl">
-                Engineers
-              </button>
-            </NavLink>
-
-            <NavLink to={"/assignments/page"}>
-              <button className="cursor-pointer w-fit px-2 text-white bg-red-400 rounded-2xl">
-                Assignments
-              </button>
-            </NavLink>
-
-            <NavLink to={"/projects/page"}>
-              <button className="cursor-pointer w-fit px-2 text-white bg-red-400 rounded-2xl">
-                Projects
-              </button>
-            </NavLink>
-
             <NavLink to={"/profile"}>
               <CircleUserRound className="w-8 h-8 cursor-pointer bg-black text-white rounded-full" />
             </NavLink>
