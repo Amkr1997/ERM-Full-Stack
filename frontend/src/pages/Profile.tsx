@@ -10,9 +10,11 @@ const Profile = () => {
 
   return (
     <section className="w-screen">
-      <h1 className="text-center text-3xl font-bold py-3">
-        {profile?.name}'s Profile
-      </h1>
+      {profile?.name && (
+        <h1 className="text-center text-3xl font-bold py-3">
+          {profile.name}'s Profile
+        </h1>
+      )}
       <div className="py-8 flex flex-col items-center gap-5">
         <ShieldUser className="w-48 h-48 opacity-50" />
 

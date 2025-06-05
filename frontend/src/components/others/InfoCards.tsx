@@ -14,12 +14,15 @@ type InfoCardProps = {
 };
 
 const InfoCards = ({ title, value }: InfoCardProps) => {
+  console.log(title);
+  console.log(value);
+
   return (
     <>
       <Card className="w-full">
         <CardHeader>
-          <CardTitle>Card Title</CardTitle>
-          <CardDescription>Card Description</CardDescription>
+          <CardTitle>Total Projects: </CardTitle>
+          <CardDescription></CardDescription>
           <CardAction>Card Action</CardAction>
         </CardHeader>
         <CardContent>

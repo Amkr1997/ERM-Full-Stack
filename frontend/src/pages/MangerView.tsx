@@ -1,25 +1,24 @@
 import InfoCards from "@/components/others/InfoCards";
 import {
+  useAssignmentStore,
   useAuthStore,
   useEngineerStore,
   useProjectStore,
   useUserProfileStore,
 } from "@/store/store";
-import { useEffect, useState } from "react";
-import { set } from "react-hook-form";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 // const API_URL = import.meta.env.VITE_API_URL_PROD;
 const API_URL = import.meta.env.VITE_API_URL_LOCAL;
 
 const ManagerView = () => {
-  // const [username, setUsername] = useState("");
-  const [allAssignments, setAllAssignments] = useState("");
-  // const [allProjects, setAllProjects] = useState([]);
-  // const [allEngineers, setAllEngineers] = useState("");
   const { userId } = useAuthStore((state) => state);
   const { setEngineers, allEngineers } = useEngineerStore((state) => state);
   const { profile, setProfile } = useUserProfileStore((state) => state);
   const { allProjects, setProjects } = useProjectStore((state) => state);
+  const { allAssignments, setAssignments } = useAssignmentStore(
+    (state) => state
+  );
 
   // fetch all engineers.
   useEffect(() => {
@@ -28,7 +27,6 @@ const ManagerView = () => {
         const res = await fetch(`${API_URL}/api/user/get/all/engineers`);
         const data = await res.json();
 
-        // setAllEngineers(data?.engineers);
         setEngineers(data?.engineers);
       } catch (error) {
         console.log(error);
@@ -43,7 +41,6 @@ const ManagerView = () => {
         const res = await fetch(`${API_URL}/api/user/get/user/${userId}`);
         const data = await res.json();
 
-        // setUsername(data?.user?.name);
         setProfile(data?.user);
       } catch (error) {
         console.log(error);
@@ -76,7 +73,7 @@ const ManagerView = () => {
         );
         const data = await res.json();
 
-        setAllAssignments(data?.allAssignments);
+        setAssignments(data?.allAssignments);
       } catch (error) {
         console.log(error);
       }
@@ -84,18 +81,21 @@ const ManagerView = () => {
   }, [userId]);
 
   // finding average utilization.
-  // useEffect(() => {
-  //   const averageUtilization = () => {
-  //     console.log(allAssignments);
-  //     // let totalCapacity = allAssignments?.reduce(
-  //     //   (acc,curr) => acc + curr.capacity,
-  //     // );
-  //   };
+  useEffect(() => {
+    const averageUtilization = () => {
+      console.log(allEngineers);
 
-  //   averageUtilization();
-  // }, [allEngineers]);
+      // let totalCapacity = allAssignments?.reduce(
+      //   (acc,curr) => acc + curr.,
+      // );
+    };
+
+    averageUtilization();
+  }, [allEngineers]);
 
   // console.log(allEngineers);
+
+  console.log(allAssignments);
 
   return (
     <section className="w-screen">
@@ -124,9 +124,9 @@ const ManagerView = () => {
 
           <section className="pt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <InfoCards title="engineers" value={allEngineers?.length} />
-            <InfoCards title="projects" value={allProjects} />
-            <InfoCards title="assignments" value={allAssignments} />
-            <InfoCards title="avg utilization" value={allAssignments} />
+            <InfoCards title="projects" value={allProjects?.length} />
+            <InfoCards title="assignments" value={allAssignments?.length} />
+            <InfoCards title="avg utilization" value={allAssignments?.length} />
           </section>
         </main>
       )}
