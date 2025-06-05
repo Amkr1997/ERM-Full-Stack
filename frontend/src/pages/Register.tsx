@@ -3,8 +3,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// const API_URL = import.meta.env.VITE_API_URL_PROD;
-const API_URL = import.meta.env.VITE_API_URL_LOCAL;
+const API_URL = import.meta.env.VITE_API_URL_PROD;
+// const API_URL = import.meta.env.VITE_API_URL_LOCAL;
 
 type RegisterFormInputs = {
   name: string;

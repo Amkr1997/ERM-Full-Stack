@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useAuthStore, useEngineerStore, useProjectStore } from "@/store/store";
-// const API_URL = import.meta.env.VITE_API_URL_PROD;
-const API_URL = import.meta.env.VITE_API_URL_LOCAL;
+const API_URL = import.meta.env.VITE_API_URL_PROD;
+// const API_URL = import.meta.env.VITE_API_URL_LOCAL;
 
 type NewAssignmentFormInputs = {
   name: string;
