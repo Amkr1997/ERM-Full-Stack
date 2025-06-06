@@ -37,16 +37,27 @@ type Project = {
   _id: string;
 };
 
+type Manager = {
+  createdAt: string;
+  email: string;
+  maxCapacity: number;
+  name: string;
+  role: string;
+  skills: string[];
+  updatedAt: string;
+  _id: string;
+};
+
 type Assignment = {
   allocationPercentage: number;
   createdAt: string;
   endDate: string;
   enigneerId: string;
-  managerId: object;
+  managerId: Manager;
   name: string;
-  projectId: string;
+  projectId: Project;
   role: string;
-  startDate: string;
+  startDate: Date;
   updatedAt: string;
   _id: string;
 };
@@ -99,7 +110,7 @@ export const useAuthStore = create<AuthState>()(
       setAuth: ({ role, id }: { role: string; id: string }) =>
         set({ isAuthenticated: true, userRole: role, userId: id }),
       logout: () => {
-        set({ isAuthenticated: false, userRole: "" });
+        set({ isAuthenticated: false, userRole: "", userId: "" });
 
         // Set engineers to an empty array
         useEngineerStore.getState().setEngineers([]);

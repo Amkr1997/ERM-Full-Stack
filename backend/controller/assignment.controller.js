@@ -15,10 +15,19 @@ const getAllAssignments = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    if (userId === user.enigneerId) {
+    if (user.role === "engineer") {
       const allAssignments = await Assignment.find({
         enigneerId: userId,
-      });
+      })
+        .populate({
+          path: "enigneerId",
+        })
+        .populate({
+          path: "projectId",
+        })
+        .populate({
+          path: "managerId",
+        });
 
       if (!allAssignments) {
         return res.status(404).json({ error: "Assignments not found" });

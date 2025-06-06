@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useAuthStore } from "@/store/store";
 const API_URL = import.meta.env.VITE_API_URL_PROD;
-// const API_URL = import.meta.env.VITE_API_URL_LOCAL;
 
 type LoginFormInputs = {
   email: string;
