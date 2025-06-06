@@ -13,7 +13,7 @@ const DisplayProjects = () => {
 
   return (
     <main className="w-full">
-      <h1 className="py-5 text-2xl text-center">All Engineers List</h1>
+      <h1 className="py-5 text-2xl text-center">All Projects List</h1>
       {allProjects?.map((project) => (
         <Card className="w-full mx-auto mb-5" key={project._id}>
           <CardHeader>
